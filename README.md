@@ -3,8 +3,14 @@ The ultimate linux dropper. The idea for this is to generate one massive script
 based on several smaller droppers.
 
 ## Usage
-Create another repository called Titans. Clone that repository beside the TitanFall repository.
-Currently my Titans repo is private but I will make it public soon.
+TitanFall requires module in order to be used. These modules are called [Titans](https://github.com/micahjmartin/Titans-Sample)
+
+### Get the repositories
+```
+git clone https://github.com/micahjmartin/TitanFall
+git clone https://github.com/micahjmartin/Titans-Sample Titans
+cd TitanFall
+```
 
 ### Generate a config
 `./scripts/generate_config.sh test.yml`
