@@ -1,0 +1,36 @@
+# Log output with color codes
+LOG() {
+    {% if LOGLEVEL > 0 %}
+    if [ "$2" != "" ]; then
+        {% if LOGLEVEL > 1 %}
+	COLOR_NONE='\033[0m'
+	COLOR_RED='\033[0;31m'
+	COLOR_BLUE='\033[0;35m'
+	COLOR_GREEN='\033[0;32m'
+	COLOR_YELLOW='\033[0;33m'
+        {% endif %}
+	LOG_ARG=$1
+	shift
+	if [ "$LOG_ARG" = "0" ]; then
+	    LOG_MESSAGE="${COLOR_GREEN}[+] $@${COLOR_NONE}\n"
+	elif [ "$LOG_ARG" = "1" ]; then
+	    LOG_MESSAGE="${COLOR_BLUE}[*] $@${COLOR_NONE}\n"
+	elif [ "$LOG_ARG" = "2" ]; then
+	    LOG_MESSAGE="${COLOR_RED}[-] $@${COLOR_NONE}\n"
+	elif [ "$LOG_ARG" = "warn" ]; then
+	    LOG_MESSAGE="${COLOR_YELLOW}[!] $@${COLOR_NONE}\n"
+	else
+            LOG_MESSAGE="$@\n"
+        fi
+    else 
+	LOG_MESSAGE="$@"
+    fi
+    if [ "$1" != "" ]; then
+	printf "$LOG_MESSAGE"
+    fi
+    return $?;
+    {% else %}
+    return 0;
+    {% endif %}
+}
+

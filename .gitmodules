@@ -1,0 +1,3 @@
+[submodule "tf/parser"]
+	path = tf/parser
+	url = https://github.com/micahjmartin/Bash-Parser
