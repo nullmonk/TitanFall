@@ -7,7 +7,7 @@ TitanFall requires module in order to be used. These modules are called [Titans]
 
 ### Get the repositories
 ```
-git clone https://github.com/micahjmartin/TitanFall
+git clone --recursive https://github.com/micahjmartin/TitanFall
 git clone https://github.com/micahjmartin/Titans-Sample Titans
 cd TitanFall
 ```
