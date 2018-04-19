@@ -23,6 +23,46 @@ def list_files(startdir):
             retval += [f for f in files]
     return retval
 
+def parse_payload(filename):
+    '''
+    Parse a module file and turn it into useful data
+    '''
+    def find_comment_key(string, key):
+        '''
+        Search for a value specified in the comment of the file
+        E.x. '# WEIGHT: 50'
+        '''
+        search = "# {}: ".format(key)
+        start = script.find(search)
+        if start == -1:
+            search = "# {} ".format(key)
+            start = script.find(search)
+        if start != -1:
+            try:
+                value = script[start+len(search):script.find("\n",start)]
+                return value
+            except Exception as E:
+                return None
+
+    data = {}
+    with open(filename) as fil:
+        script = fil.read()
+
+    # Get the weight, default to 50
+    try:
+        value = find_comment_key(script, "WEIGHT")
+        data['weight'] = int(value)
+    except Exception as E:
+        data['weight'] = 50
+    # Get the starting function
+    value = find_comment_key(script, "RUN")
+    if value:
+        data['run'] = value
+    else:
+        data['run'] = os.path.basename(filename)[:-3]
+    data['script'] = script
+    return data
+
 
 def create_script(config, **kwargs):
     '''
@@ -32,25 +72,32 @@ def create_script(config, **kwargs):
     functions_dir = config.get("directory", "../Titans/functions")
     functions = list_files(functions_dir)
 
+    script = ""
+    # The payload names to call
+    calls = ["INIT"]
+
     # Render the log function based on log level
     log = render("tf/templates/log_function.j2",
                  {'LOGLEVEL': config['loglevel']})
-
-    # The payload names to call from at the init
-    script = ""
-    calls = ["INIT"]
     script += log + "\n"
+    # Read and add each function
     for function in functions:
         with open(functions_dir+"/"+function) as funcfil:
             script += funcfil.read() + "\n"
-
+    # Get the payloads and sort them by weight
+    payloads = []
     for payload in config['payloads']:
-        with open(payload) as payfil:
-            content = payfil.read()
-            script += content + "\n"
-            calls += [os.path.basename(payload)[:-3]]
+        payloads += [parse_payload(payload)]
+    payloads.sort(key=lambda x: x['weight'], reverse=True)
+
+    for payload in payloads:
+        script += payload['script'] + '\n'
+        calls += [payload['run']]
+
+
     for call in calls:
         script += call+"\n"
+
     if kwargs != {}:
         script = parser.parse(script, **kwargs)
     return script
