@@ -3,12 +3,12 @@ The ultimate linux dropper. The idea for this is to generate one massive script
 based on several smaller droppers.
 
 ## Usage
-TitanFall requires module in order to be used. These modules are called [Titans](https://github.com/micahjmartin/Titans-Sample)
+TitanFall requires module in order to be used. These modules are called Titans. You can find an example of some Titans [here](https://github.com/RITRedteam/TrainingWheelsProtocol)
 
 ### Get the repositories
 ```
 git clone --recursive https://github.com/micahjmartin/TitanFall
-git clone https://github.com/micahjmartin/Titans-Sample Titans
+git clone https://github.com/RITRedteam/TrainingWheelsProtocol Titans
 cd TitanFall
 ```
 
