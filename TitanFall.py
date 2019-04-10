@@ -3,7 +3,7 @@ import sys
 
 
 def startFlask(port):
-    from tf import app
+    from tf.app import app
     import logging
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.DEBUG)

@@ -1,6 +1,9 @@
-from flask import Response
+# Create a basic Flask app
+from flask import Flask, Response
+
+app = Flask(__name__)
 import yaml
-from . import app
+
 from .build import create_script
 
 

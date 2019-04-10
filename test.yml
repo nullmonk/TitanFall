@@ -1,9 +1,0 @@
----
-name: test
-description: ""
-loglevel: 2
-parse: true
-payloads:
-  - "../Titans/payloads/tools.sh"
-  - "../Titans/payloads/users.sh"
-  - "../Titans/payloads/bashrc.sh"
