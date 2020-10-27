@@ -13,7 +13,7 @@ cd TitanFall
 ```
 
 ### Generate a config
-`./scripts/generate_config.sh test.yml`
+`./scripts/generate-config.sh test.yml`
 
 Follow the TUI to generate a new config file for TitanFall.
 
@@ -35,5 +35,5 @@ curl localhost/titanfall
 
 To build a config file inplace
 ```
-./TitanFall.py <file>
+./TitanFall.py test.yml
 ```
